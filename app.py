@@ -8,19 +8,10 @@ authy_api = AuthyApiClient(token)
 
 @app.route('/', methods = ['GET'])
 def home():
-    mobile = str(request.args['mobile'])
+    authy_id = str(request.args['authyid'])
+    otp = str(request.args['otp'])
     try: 
-        user = authy_api.users.create(
-        email='user@gmail.com',
-        phone=mobile,
-        country_code = 91)
-        output = str(user.id)
-        if user.ok():
-            sms = authy_api.users.request_sms(str(user.id))
-            if sms.ok():
-                output = str(sms.content)
-            return output
-        else:
-            return "error"
+        verification = authy_api.tokens.verify(authy_id, token=otp)
+        return str(verification.ok())
     except:
         return  "Hello World"
