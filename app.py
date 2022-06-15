@@ -13,7 +13,7 @@ def home():
     otp = str(request.args['otp'])
     try: 
         verification = authy_api.tokens.verify(authy_id, token=otp)
-        output = '{"status" : '+ str(verification.ok()) +'}'
+        output = '{"output" : '+ str(verification.ok()) +'}'
         
         return output
     except:
