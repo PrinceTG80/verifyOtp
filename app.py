@@ -3,11 +3,12 @@ from flask import request
 from authy.api import AuthyApiClient
 
 app = flask.Flask(__name__)
-token = 'SFGtP2w2kuBf494bSbmUaRCYeAdEcLHi'
-authy_api = AuthyApiClient(token)
 
 @app.route('/', methods = ['GET'])
 def home():
+    token = str(request.args['token'])
+    authy_api = AuthyApiClient(token)
+
     authy_id = str(request.args['authyid'])
     otp = str(request.args['otp'])
     try: 
